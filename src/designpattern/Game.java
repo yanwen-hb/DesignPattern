@@ -29,21 +29,12 @@ public abstract class Game {
         ImageIcon object = new ImageIcon(path);
         ImageIcon newObject = scaleImage(object, (int) Math.round(object.getIconWidth() * 0.1), (int) Math.round(object.getIconHeight() * 0.1));
         label.setIcon(newObject);
-        label.setBounds(getRandomNumber(0, 750), getRandomNumber(400, 620), newObject.getIconWidth(), (int) Math.round(newObject.getIconHeight()));
+        label.setBounds(getRandomNumber(0, 750), getRandomNumber(400, 620), newObject.getIconWidth(), (int) newObject.getIconHeight());
         label.setCursor(new Cursor(12));
         return label;
     }
 
-    void Clicked() {
-        label.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent me) {
-                System.out.println("CLICKED");
-                point();
-                label.setIcon(null);
-                label.setVisible(false);
-            }
-        });
-    }
+    abstract void Clicked();
 
     ImageIcon scaleImage(ImageIcon icon, int w, int h) {
         int nw = icon.getIconWidth();

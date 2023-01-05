@@ -4,7 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 public class Crab extends Game {
 
-    private static final String CRAB_URL = "C:\\Users\\xingy\\Pictures\\movingCrab.gif";
+    private static final String CRAB_URL = "assets\\movingCrab.gif";
     Point pt = Point.getInstance();
 
     public Crab() {

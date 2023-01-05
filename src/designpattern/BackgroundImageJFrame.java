@@ -29,7 +29,7 @@ public class BackgroundImageJFrame extends JFrame {
     Point pt = Point.getInstance();
     String testing;
 
-    private static final String BACKGROUNDIMAGE_URL = "C:\\Users\\xingy\\Pictures\\pantai.png";
+    private static final String BACKGROUNDIMAGE_URL = "assets\\pantai.png";
 
 
     public void setPanel(JPanel panel){

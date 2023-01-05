@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 public class Lobster extends Game {
     public static BackgroundImageJFrame frame;
 
-    private static final String LOBSTER_URL = "C:\\Users\\xingy\\Pictures\\movingLobster.gif";
+    private static final String LOBSTER_URL = "assets\\movingLobster.gif";
     Point pt = Point.getInstance();
 
     public Lobster(BackgroundImageJFrame frame) {

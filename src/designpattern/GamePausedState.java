@@ -19,6 +19,8 @@ public class GamePausedState implements State {
         frame.getTimer().start();
         frame.getPauseButton().setVisible(true);
         frame.getResumeButton().setVisible(false);
+        frame.getPoint().setVisible(true); // display point
+        frame.getPoint().setText("Point: "+Point.getInstance().getTotal());
         System.out.println("Game resumed!");
     };
     public void clickLobster(){

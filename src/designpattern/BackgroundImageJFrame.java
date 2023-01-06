@@ -17,6 +17,7 @@ public class BackgroundImageJFrame extends JFrame {
     Timer timer;
     JLabel crab;
     JLabel lobster;
+    JButton point;
     Component[] componentList;
     JButton startButton;
     JButton pauseButton;
@@ -26,7 +27,7 @@ public class BackgroundImageJFrame extends JFrame {
     State gameStartedState;
     State gamePausedState;
     State state;
-    Point pt = Point.getInstance();
+    Point pt = Point.getInstance(); 
     String testing;
 
     private static final String BACKGROUNDIMAGE_URL = "assets\\pantai.png";
@@ -48,6 +49,9 @@ public class BackgroundImageJFrame extends JFrame {
         this.timer = timer;
     }
 
+    public void setPoint(JButton point) {
+        this.point = point;
+    }
 
     public BackgroundImageJFrame() {
         idleState = new IdleState(this);
@@ -67,7 +71,16 @@ public class BackgroundImageJFrame extends JFrame {
         setSize(image.getIconWidth(), image.getIconHeight()); // gets h and w of image and sets jframe to the size
         int x = (screenSize.width - getSize().width) / 2; // These two lines are the dimensions
         int y = (screenSize.height - getSize().height) / 2;// of the center of the screen
-
+        
+        //create point button
+        point = new JButton("Point: "+pt.getTotal());
+        point.setBackground(Color.white);
+        point.setForeground(Color.black);        
+        point.setFocusPainted(false);       
+        point.setBounds(80,30,120,40);
+        panel.add(point);
+        point.setVisible(false);
+        
         // Creating start button
         startButton = new JButton("Start");
         startButton.setBackground(new Color(59, 89, 182));
@@ -110,7 +123,7 @@ public class BackgroundImageJFrame extends JFrame {
 
         panel.add(startButton);
         panel.add(pauseButton);
-        panel.add(resumeButton);
+        panel.add(resumeButton);       
         pauseButton.setVisible(false);
         resumeButton.setVisible(false);
 
@@ -184,6 +197,10 @@ public class BackgroundImageJFrame extends JFrame {
 
     public Timer getTimer(){
         return timer;
+    }
+
+    public JButton getPoint() {
+        return point;
     }
 
     public ImageIcon scaleImage(ImageIcon icon, int w, int h) {

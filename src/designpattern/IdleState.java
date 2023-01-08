@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class IdleState implements State {
+
     public static BackgroundImageJFrame frame;
     JButton startButton;
     String testing;
@@ -16,11 +17,19 @@ public class IdleState implements State {
 
     public void clickStartButton() {
         System.out.println("Game start!");
+        System.out.println("Game Instruction: ");
+        System.out.println("Click crab to add point! Dont click lobster! You may try!");
         frame.setState(frame.getGameStartedState());
-        frame.getStartButton().setVisible(false);                
+        frame.getStartButton().setVisible(false);
         frame.getPauseButton().setVisible(true);
         frame.getPoint().setVisible(true); //display point 
-        frame.getPoint().setText("Point: "+Point.getInstance().getTotal());
+        frame.getPoint().setText("Point: " + Point.getInstance().getTotal());
+        //remote
+        JButton[] buttons=frame.getButtons();
+        for (int i = 0; i < buttons.length; i++) {
+            buttons[i].setVisible(false);
+        }
+        
         for (var i = 0; i < 10; i++) {
             JLabel crab = new Crab().GameProcess();
             frame.getPanel().add(crab);
@@ -36,7 +45,7 @@ public class IdleState implements State {
             public void actionPerformed(ActionEvent evt) {
                 for (Component c : frame.getPanel().getComponents()) {
                     // Find the components you want to remove
-                    if (c instanceof JLabel && c.getName() != "background") {
+                    if (c instanceof JLabel && c.getName() != "background" && c.getName() != "staticObject") {
                         frame.getPanel().remove(c);
                     }
                 }
@@ -49,26 +58,33 @@ public class IdleState implements State {
                     frame.getPanel().add(lobster);
                     frame.getPanel().setComponentZOrder(lobster, 0);
                 }
-                frame.getPauseButton().setVisible(true);               
+                frame.getPauseButton().setVisible(true);
                 frame.getPanel().revalidate();
                 frame.getPanel().repaint();
             }
         };
         Timer timer = new Timer(delay, taskPerformer);
         frame.setTimer(timer);
-        timer.start();        
-    };
+        timer.start();
+    }
+
+    ;
 
     public void clickPauseButton() {
         System.out.println("You are not in the game!");
 
-    };
+    }
+
+    ;
 
     public void clickResumeButton() {
         System.out.println("You are not in the game!");
-    };
+    }
+
+    ;
 
     public void clickLobster() {
         System.out.println("You are not in the game!");
-    };
+    }
+;
 }

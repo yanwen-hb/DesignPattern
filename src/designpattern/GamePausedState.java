@@ -1,5 +1,7 @@
 package designpattern;
 
+import javax.swing.JButton;
+
 public class GamePausedState implements State {
     public static BackgroundImageJFrame frame;
 
@@ -21,6 +23,11 @@ public class GamePausedState implements State {
         frame.getResumeButton().setVisible(false);
         frame.getPoint().setVisible(true); // display point
         frame.getPoint().setText("Point: "+Point.getInstance().getTotal());
+        JButton[] buttons=frame.getButtons();
+        for (int i = 0; i < buttons.length; i++) {
+            System.out.println("button true");
+            buttons[i].setVisible(false);
+        }
         System.out.println("Game resumed!");
     };
     public void clickLobster(){

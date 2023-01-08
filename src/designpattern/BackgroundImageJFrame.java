@@ -11,6 +11,11 @@ import java.awt.Cursor;
 import java.awt.*;
 import java.awt.event.*;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+ //import classes from other package
+import designpattern.Command.Remote;
+import designpattern.Command.StaticObject;
+import designpattern.Command.AddStaticObjectCommand;
+import designpattern.Command.RemoveStaticObjectCommand;
 
 public class BackgroundImageJFrame extends JFrame {
     JPanel panel;
@@ -23,6 +28,8 @@ public class BackgroundImageJFrame extends JFrame {
     JButton pauseButton;
     JButton resumeButton;
     JButton endButton;
+    JButton treeButton;
+    JButton [] buttons;
     State idleState;
     State gameStartedState;
     State gamePausedState;
@@ -52,11 +59,15 @@ public class BackgroundImageJFrame extends JFrame {
     public void setPoint(JButton point) {
         this.point = point;
     }
+    
+    public void setButtons(JButton [] buttons){
+        this.buttons = buttons;
+    }
 
     public BackgroundImageJFrame() {
         idleState = new IdleState(this);
-		gameStartedState = new GameStartedState(this);
-		gamePausedState = new GamePausedState(this);
+        gameStartedState = new GameStartedState(this);
+        gamePausedState = new GamePausedState(this);
         state = idleState;
         testing = "Adsadsad";
 
@@ -102,6 +113,32 @@ public class BackgroundImageJFrame extends JFrame {
         resumeButton.setForeground(Color.white);
         resumeButton.setFocusPainted(false);
         resumeButton.setBounds(getSize().width - 110, 10, 90, 50);
+        
+        //Creating static object buttons
+        Remote remote=new Remote();
+        buttons=createRemoteButton(this, remote, image); //image-> to determine the position of button
+        
+        //Create object and add command -> to be modified to factory design pattern
+        
+        //create object
+        StaticObject boat=new StaticObject(this, panel, "assets\\boat.png", 460, 400); 
+        //set command
+        AddStaticObjectCommand addBoat=new AddStaticObjectCommand(boat);
+        RemoveStaticObjectCommand removeBoat=new RemoveStaticObjectCommand(boat);
+        remote.setCommand(0, addBoat, removeBoat);
+        //add commend to button
+        addCommandToButton(remote, buttons[0], buttons[1], this, 0, "boat");
+        
+        //another object
+        //create object
+        StaticObject tree=new StaticObject(this , panel, "assets\\tree.png", 20, 460);
+        //set command
+        AddStaticObjectCommand addTree=new AddStaticObjectCommand(tree);
+        RemoveStaticObjectCommand removeTree=new RemoveStaticObjectCommand(tree);
+        remote.setCommand(1, addTree, removeTree);
+        //add commend to button
+        addCommandToButton(remote, buttons[2], buttons[3], this, 1, "tree");
+
 
         pauseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -148,6 +185,7 @@ public class BackgroundImageJFrame extends JFrame {
         state.clickResumeButton();
     };
     public void clickLobster(){
+        System.out.println("state: "+state.getClass());
         state.clickLobster();
     };
 
@@ -202,6 +240,14 @@ public class BackgroundImageJFrame extends JFrame {
     public JButton getPoint() {
         return point;
     }
+    
+    public JButton getTreeButton() {
+        return buttons[0];
+    }
+        
+    public JButton [] getButtons(){
+        return buttons;
+    }
 
     public ImageIcon scaleImage(ImageIcon icon, int w, int h) {
         int nw = icon.getIconWidth();
@@ -222,5 +268,44 @@ public class BackgroundImageJFrame extends JFrame {
 
     public int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
+    }
+    
+    //command design pattern
+    public JButton[] createRemoteButton(JFrame f, Remote remote, ImageIcon image){
+        JButton [] buttons=new JButton[12]; ////image.getIconWidth(), image.getIconHeight()
+        int xAxis= 20 ;//100;
+        System.out.println("width: "+ image.getIconWidth());
+        int yAxis= image.getIconHeight()-140;//350;
+        for (int i = 0; i < 12; i++) {
+            buttons[i] = new JButton("");
+            buttons[i].setBackground(new Color(	52, 73, 94));
+            buttons[i].setForeground(Color.white);
+            buttons[i].setFocusPainted(false);
+            if(i%2==1){
+                buttons[i-1].setBounds(xAxis, yAxis, 110, 30); 
+                buttons[i].setBounds(xAxis, yAxis+40, 110, 30); 
+                xAxis+=120;
+            }
+        }
+        setButtons(buttons);
+        return buttons;
+    }
+    
+    public void addCommandToButton(Remote remote, JButton addButton, JButton removeButton, JFrame f, int slot, String name){
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                remote.onButtonWasPushed(slot);
+            }
+        });
+        addButton.setText("add "+name);
+        f.add(addButton);
+        
+        removeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                remote.offButtonWasPushed(slot);
+            }
+        });
+        removeButton.setText("remove "+name);
+        f.add(removeButton);
     }
 }

@@ -1,36 +1,52 @@
 package designpattern;
 
+import java.io.IOException;
 import javax.swing.JButton;
 
 public class GamePausedState implements State {
+
     public static BackgroundImageJFrame frame;
 
-    public GamePausedState(BackgroundImageJFrame frame){
+    public GamePausedState(BackgroundImageJFrame frame) {
         this.frame = frame;
     }
 
-    public void clickStartButton(){
+    public void clickStartButton() {
         System.out.println("You are already in the game!");
-    };
-    public void clickPauseButton(){
+    }
+
+    ;
+    public void clickPauseButton() {
         System.out.println("The game has been paused!");
 
-    };
-    public void clickResumeButton(){
+    }
+
+    ;
+    public void clickResumeButton() {
+        try {
+            frame.getBackgroundSound().stop();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        frame.getSecondBackgroundSound().setFile("assets\\game.wav");
+        frame.getSecondBackgroundSound().play();
         frame.setState(frame.getGameStartedState());
         frame.getTimer().start();
         frame.getPauseButton().setVisible(true);
         frame.getResumeButton().setVisible(false);
         frame.getPoint().setVisible(true); // display point
-        frame.getPoint().setText("Point: "+Point.getInstance().getTotal());
-        JButton[] buttons=frame.getButtons();
+        frame.getPoint().setText("Point: " + Point.getInstance().getTotal());
+        JButton[] buttons = frame.getButtons();
         for (int i = 0; i < buttons.length; i++) {
-            System.out.println("button true");
             buttons[i].setVisible(false);
         }
         System.out.println("Game resumed!");
-    };
-    public void clickLobster(){
+    }
+
+    ;
+    public void clickLobster() {
         System.out.println("Unable to play game when under paused mode!");
-    };
+    }
+;
 }

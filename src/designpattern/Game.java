@@ -54,14 +54,4 @@ public abstract class Game {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-//    void calculatePoints(String algorithm) {
-//        
-////        if (algorithm.equals("Add")) {
-////            pt.total += 1;
-////        } else if (algorithm.equals("Minus")) {
-////            pt.point -= 1;
-////            pt.total += pt.point;
-////        }
-//    }
-
 }

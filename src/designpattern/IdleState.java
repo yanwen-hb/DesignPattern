@@ -1,8 +1,12 @@
 package designpattern;
 
+import static designpattern.GameStartedState.frame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class IdleState implements State {
 
@@ -15,10 +19,21 @@ public class IdleState implements State {
         this.frame = frame;
     }
 
-    public void clickStartButton() {
+    public void clickStartButton() { 
         System.out.println("Game start!");
         System.out.println("Game Instruction: ");
         System.out.println("Click crab to add point! Dont click lobster! You may try!");
+        
+        try {
+            //sound effect testing
+            frame.getBackgroundSound().stop();
+//            frame.getSecondBackgroundSound().stop();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        frame.getSecondBackgroundSound().setFile("assets\\game.wav");
+        frame.getSecondBackgroundSound().play();
+        
         frame.setState(frame.getGameStartedState());
         frame.getStartButton().setVisible(false);
         frame.getPauseButton().setVisible(true);

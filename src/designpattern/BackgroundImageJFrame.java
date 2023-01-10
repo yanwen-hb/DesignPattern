@@ -11,13 +11,14 @@ import java.awt.Cursor;
 import java.awt.*;
 import java.awt.event.*;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
- //import classes from other package
+//import classes from other package
 import designpattern.Command.Remote;
 import designpattern.Command.StaticObject;
 import designpattern.Command.AddStaticObjectCommand;
 import designpattern.Command.RemoveStaticObjectCommand;
 
 public class BackgroundImageJFrame extends JFrame {
+
     JPanel panel;
     Timer timer;
     JLabel crab;
@@ -28,40 +29,83 @@ public class BackgroundImageJFrame extends JFrame {
     JButton pauseButton;
     JButton resumeButton;
     JButton endButton;
-    JButton treeButton;
-    JButton [] buttons;
+    JButton[] buttons;
     State idleState;
     State gameStartedState;
     State gamePausedState;
     State state;
-    Point pt = Point.getInstance(); 
+    Point pt = Point.getInstance();
     String testing;
+    Remote remote;
+    SimpleButtonFactory factory;
+    ButtonStore buttonStore;
+    boolean seagullsUnlock = false;
+    boolean shellUnlock = false;
+    boolean sunUnlock = false;
+    String sound_track;
+    Music se;
+    Music se2;
 
     private static final String BACKGROUNDIMAGE_URL = "assets\\pantai.png";
 
-
-    public void setPanel(JPanel panel){
+    public void setPanel(JPanel panel) {
         this.panel = panel;
     }
 
-    public void setStartButton(JButton startButton){
+    public void setStartButton(JButton startButton) {
         this.startButton = startButton;
     }
 
-    public void setPauseButton(JButton pauseButton){
+    public void setPauseButton(JButton pauseButton) {
         this.pauseButton = pauseButton;
     }
 
-    public void setTimer(Timer timer){
+    public void setTimer(Timer timer) {
         this.timer = timer;
     }
 
     public void setPoint(JButton point) {
         this.point = point;
     }
-    
-    public void setButtons(JButton [] buttons){
+
+    public void setButtons(JButton[] buttons) {
         this.buttons = buttons;
+    }
+
+    public void setRemote(Remote remote) {
+        this.remote = remote;
+    }
+
+    public void setFactory(SimpleButtonFactory factory) {
+        this.factory = factory;
+    }
+
+    public void setButtonStore(ButtonStore buttonStore) {
+        this.buttonStore = buttonStore;
+    }
+
+    public void setSeagullsUnlock(boolean accomplished) {
+        this.seagullsUnlock = accomplished;
+    }
+
+    public void setShellUnlock(boolean accomplished) {
+        this.shellUnlock = accomplished;
+    }
+
+    public void setSunUnlock(boolean accomplished) {
+        this.sunUnlock = accomplished;
+    }
+
+    public void setSoundTrack(String sound_track) {
+        this.sound_track = sound_track;
+    }
+
+    public void setBackgroundSound(Music se) {
+        this.se = se;
+    }
+
+    public void setSecondBackgroundSound(Music se2) {
+        this.se2 = se2;
     }
 
     public BackgroundImageJFrame() {
@@ -70,6 +114,12 @@ public class BackgroundImageJFrame extends JFrame {
         gamePausedState = new GamePausedState(this);
         state = idleState;
         testing = "Adsadsad";
+
+        //create sound effect
+        se = new Music();
+        se2 = new Music();
+        setBackgroundSound(se);
+        setSecondBackgroundSound(se2);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // this is your screen size
         ImageIcon image = new ImageIcon(BACKGROUNDIMAGE_URL); // imports the image
@@ -82,63 +132,59 @@ public class BackgroundImageJFrame extends JFrame {
         setSize(image.getIconWidth(), image.getIconHeight()); // gets h and w of image and sets jframe to the size
         int x = (screenSize.width - getSize().width) / 2; // These two lines are the dimensions
         int y = (screenSize.height - getSize().height) / 2;// of the center of the screen
-        
+
         //create point button
-        point = new JButton("Point: "+pt.getTotal());
+        point = new JButton("Point: " + pt.getTotal());
         point.setBackground(Color.white);
-        point.setForeground(Color.black);        
-        point.setFocusPainted(false);       
-        point.setBounds(80,30,120,40);
+        point.setForeground(Color.black);
+        point.setFont(new Font("DEFAULT", Font.PLAIN, 15));
+        point.setFocusPainted(false);
+        point.setBounds((getSize().width - 90) / 2, 20, 120, 30);
         panel.add(point);
         point.setVisible(false);
-        
+
         // Creating start button
         startButton = new JButton("Start");
-        startButton.setBackground(new Color(59, 89, 182));
+        startButton.setBackground(new Color(0, 204, 204));
+        startButton.setFont(new Font("ARIAL", Font.CENTER_BASELINE, 15));
         startButton.setForeground(Color.white);
         startButton.setFocusPainted(false);
-        startButton.setBounds((getSize().width - 90) / 2, (getSize().height - 50) / 2, 90, 50);
+        startButton.setBounds(getSize().width - 130, 20, 100, 30);
         setStartButton(startButton);
-        
+
         //Creating pause button
         pauseButton = new JButton("Pause");
         pauseButton.setBackground(Color.red);
         pauseButton.setForeground(Color.white);
+        pauseButton.setFont(new Font("ARIAL", Font.CENTER_BASELINE, 15));
         pauseButton.setFocusPainted(false);
-        pauseButton.setBounds(getSize().width - 110, 10, 90, 50);
+        pauseButton.setBounds(getSize().width - 130, 20, 100, 30);
 
         //Creating resume button
         resumeButton = new JButton("Resume");
         resumeButton.setBackground(Color.green);
+        resumeButton.setBackground(new Color(0, 204, 0));
+        resumeButton.setFont(new Font("ARIAL", Font.CENTER_BASELINE, 15));
         resumeButton.setForeground(Color.white);
         resumeButton.setFocusPainted(false);
-        resumeButton.setBounds(getSize().width - 110, 10, 90, 50);
-        
-        //Creating static object buttons
-        Remote remote=new Remote();
-        buttons=createRemoteButton(this, remote, image); //image-> to determine the position of button
-        
-        //Create object and add command -> to be modified to factory design pattern
-        
-        //create object
-        StaticObject boat=new StaticObject(this, panel, "assets\\boat.png", 460, 400); 
-        //set command
-        AddStaticObjectCommand addBoat=new AddStaticObjectCommand(boat);
-        RemoveStaticObjectCommand removeBoat=new RemoveStaticObjectCommand(boat);
-        remote.setCommand(0, addBoat, removeBoat);
-        //add commend to button
-        addCommandToButton(remote, buttons[0], buttons[1], this, 0, "boat");
-        
-        //another object
-        //create object
-        StaticObject tree=new StaticObject(this , panel, "assets\\tree.png", 20, 460);
-        //set command
-        AddStaticObjectCommand addTree=new AddStaticObjectCommand(tree);
-        RemoveStaticObjectCommand removeTree=new RemoveStaticObjectCommand(tree);
-        remote.setCommand(1, addTree, removeTree);
-        //add commend to button
-        addCommandToButton(remote, buttons[2], buttons[3], this, 1, "tree");
+        resumeButton.setBounds(getSize().width - 130, 20, 100, 30);
 
+        //Creating static object buttons
+        Remote remote = new Remote();
+        setRemote(remote);
+        buttons = createRemoteButton(this, remote, image); //image-> to determine the position of button
+
+        //Create object and add command 
+        SimpleButtonFactory factory = new SimpleButtonFactory();
+        setFactory(factory);
+        ButtonStore buttonStore = new ButtonStore(factory);
+        setButtonStore(buttonStore);
+        buttonStore.displayButton(this, buttons, "boat", 50, 400, remote);
+        buttonStore.displayButton(this, buttons, "sunbed", 570, 460, remote);
+
+        //sound effect
+        sound_track = "assets\\sea.wav";
+        setSoundTrack(sound_track);
 
         pauseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -160,7 +206,7 @@ public class BackgroundImageJFrame extends JFrame {
 
         panel.add(startButton);
         panel.add(pauseButton);
-        panel.add(resumeButton);       
+        panel.add(resumeButton);
         pauseButton.setVisible(false);
         resumeButton.setVisible(false);
 
@@ -171,31 +217,42 @@ public class BackgroundImageJFrame extends JFrame {
         setLocation(x, y); // sets the location of the jframe
         setVisible(true); // makes the jframe visible
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowOpened(WindowEvent event) {
+                se.setFile(sound_track);
+                se.play();
+            }
+        });
     }
 
-
-
-    public void clickStartButton(){
+    public void clickStartButton() {
         state.clickStartButton();
-    };
-    public void clickPauseButton(){
+    }
+
+    ;
+    public void clickPauseButton() {
         state.clickPauseButton();
-    };
-    public void clickResumeButton(){
+    }
+
+    ;
+    public void clickResumeButton() {
         state.clickResumeButton();
-    };
-    public void clickLobster(){
-        System.out.println("state: "+state.getClass());
+    }
+
+    ;
+    public void clickLobster() {
         state.clickLobster();
-    };
+    }
+
+    ;
 
     void setState(State state) {
-		this.state = state;
-	}
+        this.state = state;
+    }
 
     void setTesting(String testing) {
-		this.testing = testing;
-	}
+        this.testing = testing;
+    }
 
     public String getTesting() {
         return testing;
@@ -217,36 +274,68 @@ public class BackgroundImageJFrame extends JFrame {
         return state;
     }
 
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         return panel;
     }
 
-    public JButton getStartButton(){
+    public JButton getStartButton() {
         return startButton;
     }
 
-    public JButton getPauseButton(){
+    public JButton getPauseButton() {
         return pauseButton;
     }
 
-    public JButton getResumeButton(){
+    public JButton getResumeButton() {
         return resumeButton;
     }
 
-    public Timer getTimer(){
+    public Timer getTimer() {
         return timer;
     }
 
     public JButton getPoint() {
         return point;
     }
-    
-    public JButton getTreeButton() {
-        return buttons[0];
-    }
-        
-    public JButton [] getButtons(){
+
+    public JButton[] getButtons() {
         return buttons;
+    }
+
+    public Remote getRemote() {
+        return remote;
+    }
+
+    public SimpleButtonFactory getFactory() {
+        return factory;
+    }
+
+    public ButtonStore getButtonStore() {
+        return buttonStore;
+    }
+
+    public boolean getSeagullsUnlock() {
+        return seagullsUnlock;
+    }
+
+    public boolean getShellUnlock() {
+        return shellUnlock;
+    }
+
+    public boolean getSunUnlock() {
+        return sunUnlock;
+    }
+
+    public String getSoundtrack() {
+        return sound_track;
+    }
+
+    public Music getBackgroundSound() {
+        return se;
+    }
+
+    public Music getSecondBackgroundSound() {
+        return se2;
     }
 
     public ImageIcon scaleImage(ImageIcon icon, int w, int h) {
@@ -269,43 +358,25 @@ public class BackgroundImageJFrame extends JFrame {
     public int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }
-    
+
     //command design pattern
-    public JButton[] createRemoteButton(JFrame f, Remote remote, ImageIcon image){
-        JButton [] buttons=new JButton[12]; ////image.getIconWidth(), image.getIconHeight()
-        int xAxis= 20 ;//100;
-        System.out.println("width: "+ image.getIconWidth());
-        int yAxis= image.getIconHeight()-140;//350;
+    public JButton[] createRemoteButton(JFrame f, Remote remote, ImageIcon image) {
+        JButton[] buttons = new JButton[12]; ////image.getIconWidth(), image.getIconHeight()
+        int xAxis = 20;//100;
+        int yAxis = image.getIconHeight() - 140;//350;
         for (int i = 0; i < 12; i++) {
             buttons[i] = new JButton("");
-            buttons[i].setBackground(new Color(	52, 73, 94));
+            buttons[i].setBackground(new Color(52, 73, 94));
             buttons[i].setForeground(Color.white);
             buttons[i].setFocusPainted(false);
-            if(i%2==1){
-                buttons[i-1].setBounds(xAxis, yAxis, 110, 30); 
-                buttons[i].setBounds(xAxis, yAxis+40, 110, 30); 
-                xAxis+=120;
+            if (i % 2 == 1) {
+                buttons[i - 1].setBounds(xAxis, yAxis, 110, 30);
+                buttons[i].setBounds(xAxis, yAxis + 40, 110, 30);
+                xAxis += 120;
             }
         }
         setButtons(buttons);
         return buttons;
     }
-    
-    public void addCommandToButton(Remote remote, JButton addButton, JButton removeButton, JFrame f, int slot, String name){
-        addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                remote.onButtonWasPushed(slot);
-            }
-        });
-        addButton.setText("add "+name);
-        f.add(addButton);
-        
-        removeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                remote.offButtonWasPushed(slot);
-            }
-        });
-        removeButton.setText("remove "+name);
-        f.add(removeButton);
-    }
+
 }

@@ -15,7 +15,7 @@ public class DesignPattern {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        BackgroundImageJFrame testing = new BackgroundImageJFrame();
+        BackgroundImageJFrame frame = new BackgroundImageJFrame();
     }
     
 }

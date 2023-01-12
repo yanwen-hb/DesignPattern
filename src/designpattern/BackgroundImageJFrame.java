@@ -16,6 +16,7 @@ import designpattern.Command.Remote;
 import designpattern.Command.StaticObject;
 import designpattern.Command.AddStaticObjectCommand;
 import designpattern.Command.RemoveStaticObjectCommand;
+import javax.swing.border.Border;
 
 public class BackgroundImageJFrame extends JFrame {
 
@@ -41,6 +42,8 @@ public class BackgroundImageJFrame extends JFrame {
     String sound_track;
     Music se;
     Music se2;
+    JLabel instruction;
+    JLabel gameStateDisplay;
 
     private static final String BACKGROUNDIMAGE_URL = "assets\\pantai.png";
 
@@ -165,6 +168,33 @@ public class BackgroundImageJFrame extends JFrame {
         resumeButton.setFocusPainted(false);
         resumeButton.setBounds(getSize().width - 130, 20, 100, 30);
 
+        //Creating game instruction
+        instruction = new JLabel("<html>Game Instruction: <br>Click crab to add point! Dont click lobster!</html>");
+        instruction.setForeground(Color.WHITE);
+        instruction.setBounds(10, 20, 200, 50);
+        instruction.setFont(new Font("ARIAL", Font.CENTER_BASELINE, 15));
+        instruction.setName("instruction");
+        panel.add(instruction);
+        panel.setComponentZOrder(instruction, 0);
+        instruction.setVisible(false);
+
+        //Creating game state display
+        gameStateDisplay = new JLabel("<html>Game Start!</html>", SwingConstants.CENTER);
+        gameStateDisplay.setForeground(Color.RED);
+        // create a line border with the specified color and width
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 5);
+
+        // set the border of this component
+        gameStateDisplay.setBorder(border);
+        gameStateDisplay.setBounds((getSize().width - 300) / 2, (getSize().height - 200) / 2, 300, 50);
+        gameStateDisplay.setFont(new Font("ARIAL", Font.CENTER_BASELINE, 36));
+        gameStateDisplay.setBackground(Color.WHITE);
+        gameStateDisplay.setOpaque(true);
+        gameStateDisplay.setName("gameState");
+        panel.add(gameStateDisplay);
+        panel.setComponentZOrder(gameStateDisplay, 0);
+        gameStateDisplay.setVisible(false);
+
         //Creating static object buttons
         Remote remote = new Remote();
         setRemote(remote);
@@ -236,7 +266,7 @@ public class BackgroundImageJFrame extends JFrame {
     public void clickLobster() {
         state.clickLobster();
     }
-    
+
     void setState(State state) {
         this.state = state;
     }
@@ -319,6 +349,14 @@ public class BackgroundImageJFrame extends JFrame {
 
     public Music getSecondBackgroundSound() {
         return se2;
+    }
+
+    public JLabel getGameStateDisplay() {
+        return gameStateDisplay;
+    }
+
+    public JLabel getInstruction() {
+        return instruction;
     }
 
     //command design pattern

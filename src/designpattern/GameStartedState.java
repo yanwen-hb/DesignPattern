@@ -28,7 +28,8 @@ public class GameStartedState implements State {
         frame.getBackgroundSound().setFile("assets\\sea.wav");
         frame.getBackgroundSound().play();
         frame.setState(frame.getGamePausedState());
-        
+        frame.getGameStateDisplay().setText("<html>Game Pause!</html>");
+
         if (Point.getInstance().getTotal() >= 10 && !(frame.getSunUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "sun", 40, 70, frame.remote);
             frame.setSunUnlock(true);
@@ -36,14 +37,16 @@ public class GameStartedState implements State {
         if (Point.getInstance().getTotal() >= 6 && !(frame.getSeagullsUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "seagulls", 280, 100, frame.remote);
             frame.setSeagullsUnlock(true);
-        } 
+        }
         if (Point.getInstance().getTotal() >= 3 && !(frame.getShellUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "castle", 230, 480, frame.remote);
             frame.setShellUnlock(true);
         }
         for (Component c : frame.getPanel().getComponents()) {
-            if (c instanceof JLabel && c.getName() != "background" && c.getName() != "staticObject") {
+            if (c instanceof JLabel && c.getName() != "background" && c.getName() != "staticObject" && c.getName() != "instruction" && c.getName() != "gameState") {
                 frame.getPanel().remove(c);
+            } else if (c.getName() == "gameState") {
+                frame.getGameStateDisplay().setVisible(true);
             }
         }
         frame.getPauseButton().setVisible(false);
@@ -72,7 +75,7 @@ public class GameStartedState implements State {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         if (Point.getInstance().getTotal() >= 10 && !(frame.getSunUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "sun", 40, 50, frame.remote);
             frame.setSunUnlock(true);
@@ -80,14 +83,17 @@ public class GameStartedState implements State {
         if (Point.getInstance().getTotal() >= 6 && !(frame.getSeagullsUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "seagulls", 280, 100, frame.remote);
             frame.setSeagullsUnlock(true);
-        } 
+        }
         if (Point.getInstance().getTotal() >= 3 && !(frame.getShellUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "castle", 230, 480, frame.remote);
             frame.setShellUnlock(true);
         }
         for (Component c : frame.getPanel().getComponents()) {
-            if (c instanceof JLabel && c.getName() != "background" && c.getName() != "staticObject") {
+            if (c instanceof JLabel && c.getName() != "background" && c.getName() != "staticObject" && c.getName() != "instruction" && c.getName() != "gameState") {
                 frame.getPanel().remove(c);
+            } else if (c.getName() == "gameState") {
+                frame.getGameStateDisplay().setVisible(false);
+                frame.getInstruction().setVisible(false);
             }
         }
         frame.getPauseButton().setVisible(false);

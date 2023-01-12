@@ -14,7 +14,7 @@ public class AddStaticObjectCommand implements Command{
     
     @Override
     public void execute() {
-        obj.AddObject();
+        obj.addObject();
     }
     
 }

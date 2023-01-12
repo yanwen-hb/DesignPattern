@@ -31,10 +31,10 @@ public class StaticObject{
         this.imagePath=imagePath;
         this.xAxis=xAxis;
         this.yAxis=yAxis;
-        this.CreateObject(); //call function to create object and button
+        this.createObject(); //call function to create object and button
     }
     
-    public void CreateObject(){
+    public void createObject(){
         ImageIcon image= new ImageIcon(imagePath);
         ImageIcon image2=new ImageIcon(image.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT));
         label.setIcon(image2);
@@ -45,11 +45,11 @@ public class StaticObject{
         panel.setComponentZOrder(label, 0);
     }
     
-    public void AddObject(){
+    public void addObject(){
         label.setVisible(true);
     }
     
-    public void RemoveObject(){
+    public void removeObject(){
         label.setVisible(false);
     }
 }

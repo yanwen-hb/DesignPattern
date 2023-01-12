@@ -10,6 +10,6 @@ public class RemoveStaticObjectCommand implements Command{
     
     @Override
     public void execute() {
-        obj.RemoveObject();
+        obj.removeObject();
     }
 }

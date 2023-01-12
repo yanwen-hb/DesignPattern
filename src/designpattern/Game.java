@@ -18,6 +18,9 @@ public abstract class Game {
         String path = URL();
         JLabel label = generate(path);
         Clicked();
+        if (newFeatureAdded()) {
+            addComponenet();
+        }
         return label;
     }
 
@@ -35,6 +38,14 @@ public abstract class Game {
     }
 
     abstract void Clicked();
+    
+    boolean newFeatureAdded() {
+        return false;
+    }
+    
+    void addComponenet() {
+        System.out.println("");
+    };
 
     ImageIcon scaleImage(ImageIcon icon, int w, int h) {
         int nw = icon.getIconWidth();

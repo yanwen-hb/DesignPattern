@@ -21,14 +21,10 @@ public class BackgroundImageJFrame extends JFrame {
 
     JPanel panel;
     Timer timer;
-    JLabel crab;
-    JLabel lobster;
     JButton point;
-    Component[] componentList;
     JButton startButton;
     JButton pauseButton;
     JButton resumeButton;
-    JButton endButton;
     JButton[] buttons;
     State idleState;
     State gameStartedState;
@@ -229,33 +225,20 @@ public class BackgroundImageJFrame extends JFrame {
         state.clickStartButton();
     }
 
-    ;
     public void clickPauseButton() {
         state.clickPauseButton();
     }
 
-    ;
     public void clickResumeButton() {
         state.clickResumeButton();
     }
 
-    ;
     public void clickLobster() {
         state.clickLobster();
     }
-
-    ;
-
+    
     void setState(State state) {
         this.state = state;
-    }
-
-    void setTesting(String testing) {
-        this.testing = testing;
-    }
-
-    public String getTesting() {
-        return testing;
     }
 
     public State getGameStartedState() {
@@ -336,27 +319,6 @@ public class BackgroundImageJFrame extends JFrame {
 
     public Music getSecondBackgroundSound() {
         return se2;
-    }
-
-    public ImageIcon scaleImage(ImageIcon icon, int w, int h) {
-        int nw = icon.getIconWidth();
-        int nh = icon.getIconHeight();
-
-        if (icon.getIconWidth() > w) {
-            nw = w;
-            nh = (nw * icon.getIconHeight()) / icon.getIconWidth();
-        }
-
-        if (nh > h) {
-            nh = h;
-            nw = (icon.getIconWidth() * nh) / icon.getIconHeight();
-        }
-
-        return new ImageIcon(icon.getImage().getScaledInstance(nw, nh, Image.SCALE_DEFAULT));
-    }
-
-    public int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
     }
 
     //command design pattern

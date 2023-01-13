@@ -25,12 +25,6 @@ public class Lobster extends Game {
         label.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent me) {
                 System.out.println("CLICKED");
-                try {
-                    //sound effect 
-                    frame.getBackgroundSound().stop();
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
                 frame.getBackgroundSound().setFile("assets\\lose.wav");
                 frame.getBackgroundSound().play();
                 point();

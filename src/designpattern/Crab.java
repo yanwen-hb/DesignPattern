@@ -25,12 +25,6 @@ public class Crab extends Game {
         label.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent me) {
                 System.out.println("CLICKED CRAB");
-                try {
-                    //sound effect 
-                    frame.getBackgroundSound().stop();
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
                 frame.getBackgroundSound().setFile("assets\\win.wav");
                 frame.getBackgroundSound().play();
                 point();

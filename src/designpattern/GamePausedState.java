@@ -10,25 +10,14 @@ public class GamePausedState implements State {
     public GamePausedState(BackgroundImageJFrame frame) {
         this.frame = frame;
     }
-
     public void clickStartButton() {
         System.out.println("You are already in the game!");
-    }
-
-    ;
+    };
     public void clickPauseButton() {
         System.out.println("The game has been paused!");
 
-    }
-
-    ;
+    };
     public void clickResumeButton() {
-        try {
-            frame.getBackgroundSound().stop();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-        
         frame.getSecondBackgroundSound().setFile("assets\\game.wav");
         frame.getSecondBackgroundSound().play();
         frame.setState(frame.getGameStartedState());
@@ -41,12 +30,12 @@ public class GamePausedState implements State {
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setVisible(false);
         }
+        frame.getGameStateDisplay().setText("Game Resume!");
         System.out.println("Game resumed!");
     }
 
     ;
     public void clickLobster() {
         System.out.println("Unable to play game when under paused mode!");
-    }
-;
+    };
 }

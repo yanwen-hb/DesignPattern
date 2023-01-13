@@ -32,7 +32,6 @@ public class BackgroundImageJFrame extends JFrame {
     State gamePausedState;
     State state;
     Point pt = Point.getInstance();
-    String testing;
     Remote remote;
     SimpleButtonFactory factory;
     ButtonStore buttonStore;
@@ -47,72 +46,11 @@ public class BackgroundImageJFrame extends JFrame {
 
     private static final String BACKGROUNDIMAGE_URL = "assets\\pantai.png";
 
-    public void setPanel(JPanel panel) {
-        this.panel = panel;
-    }
-
-    public void setStartButton(JButton startButton) {
-        this.startButton = startButton;
-    }
-
-    public void setPauseButton(JButton pauseButton) {
-        this.pauseButton = pauseButton;
-    }
-
-    public void setTimer(Timer timer) {
-        this.timer = timer;
-    }
-
-    public void setPoint(JButton point) {
-        this.point = point;
-    }
-
-    public void setButtons(JButton[] buttons) {
-        this.buttons = buttons;
-    }
-
-    public void setRemote(Remote remote) {
-        this.remote = remote;
-    }
-
-    public void setFactory(SimpleButtonFactory factory) {
-        this.factory = factory;
-    }
-
-    public void setButtonStore(ButtonStore buttonStore) {
-        this.buttonStore = buttonStore;
-    }
-
-    public void setSeagullsUnlock(boolean accomplished) {
-        this.seagullsUnlock = accomplished;
-    }
-
-    public void setShellUnlock(boolean accomplished) {
-        this.shellUnlock = accomplished;
-    }
-
-    public void setSunUnlock(boolean accomplished) {
-        this.sunUnlock = accomplished;
-    }
-
-    public void setSoundTrack(String sound_track) {
-        this.sound_track = sound_track;
-    }
-
-    public void setBackgroundSound(Music se) {
-        this.se = se;
-    }
-
-    public void setSecondBackgroundSound(Music se2) {
-        this.se2 = se2;
-    }
-
     public BackgroundImageJFrame() {
         idleState = new IdleState(this);
         gameStartedState = new GameStartedState(this);
         gamePausedState = new GamePausedState(this);
         state = idleState;
-        testing = "Adsadsad";
 
         //create sound effect
         se = new Music();
@@ -269,6 +207,66 @@ public class BackgroundImageJFrame extends JFrame {
 
     void setState(State state) {
         this.state = state;
+    }
+
+    public void setPanel(JPanel panel) {
+        this.panel = panel;
+    }
+
+    public void setStartButton(JButton startButton) {
+        this.startButton = startButton;
+    }
+
+    public void setPauseButton(JButton pauseButton) {
+        this.pauseButton = pauseButton;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+
+    public void setPoint(JButton point) {
+        this.point = point;
+    }
+
+    public void setButtons(JButton[] buttons) {
+        this.buttons = buttons;
+    }
+
+    public void setRemote(Remote remote) {
+        this.remote = remote;
+    }
+
+    public void setFactory(SimpleButtonFactory factory) {
+        this.factory = factory;
+    }
+
+    public void setButtonStore(ButtonStore buttonStore) {
+        this.buttonStore = buttonStore;
+    }
+
+    public void setSeagullsUnlock(boolean accomplished) {
+        this.seagullsUnlock = accomplished;
+    }
+
+    public void setShellUnlock(boolean accomplished) {
+        this.shellUnlock = accomplished;
+    }
+
+    public void setSunUnlock(boolean accomplished) {
+        this.sunUnlock = accomplished;
+    }
+
+    public void setSoundTrack(String sound_track) {
+        this.sound_track = sound_track;
+    }
+
+    public void setBackgroundSound(Music se) {
+        this.se = se;
+    }
+
+    public void setSecondBackgroundSound(Music se2) {
+        this.se2 = se2;
     }
 
     public State getGameStartedState() {

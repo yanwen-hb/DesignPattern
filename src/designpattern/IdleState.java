@@ -13,7 +13,7 @@ public class IdleState implements State {
     public static BackgroundImageJFrame frame;
     JButton startButton;
     String testing;
-    int delay = 1000;
+    int delay = 2000;
 
     public IdleState(BackgroundImageJFrame frame) {
         this.frame = frame;
@@ -30,13 +30,6 @@ public class IdleState implements State {
         System.out.println("Game Instruction: ");
         System.out.println("Click crab to add point! Dont click lobster! You may try!");
 
-        try {
-            //sound effect testing
-            frame.getBackgroundSound().stop();
-//            frame.getSecondBackgroundSound().stop();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
         frame.getSecondBackgroundSound().setFile("assets\\game.wav");
         frame.getSecondBackgroundSound().play();
 

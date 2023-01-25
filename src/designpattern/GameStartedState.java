@@ -30,15 +30,15 @@ public class GameStartedState implements State {
         frame.setState(frame.getGamePausedState());
         frame.getGameStateDisplay().setText("<html>Game Pause!</html>");
 
-        if (Point.getInstance().getTotal() >= 10 && !(frame.getSunUnlock())) {
+        if (Point.getInstance().getTotal() >= 15 && !(frame.getSunUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "sun", 40, 70, frame.remote);
             frame.setSunUnlock(true);
         }
-        if (Point.getInstance().getTotal() >= 6 && !(frame.getSeagullsUnlock())) {
+        if (Point.getInstance().getTotal() >= 10 && !(frame.getSeagullsUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "seagulls", 280, 100, frame.remote);
             frame.setSeagullsUnlock(true);
         }
-        if (Point.getInstance().getTotal() >= 3 && !(frame.getShellUnlock())) {
+        if (Point.getInstance().getTotal() >= 5 && !(frame.getShellUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "castle", 230, 480, frame.remote);
             frame.setShellUnlock(true);
         }
@@ -76,15 +76,15 @@ public class GameStartedState implements State {
             System.out.println(ex.getMessage());
         }
 
-        if (Point.getInstance().getTotal() >= 10 && !(frame.getSunUnlock())) {
+        if (Point.getInstance().getTotal() >= 15 && !(frame.getSunUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "sun", 40, 50, frame.remote);
             frame.setSunUnlock(true);
         }
-        if (Point.getInstance().getTotal() >= 6 && !(frame.getSeagullsUnlock())) {
+        if (Point.getInstance().getTotal() >= 10 && !(frame.getSeagullsUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "seagulls", 280, 100, frame.remote);
             frame.setSeagullsUnlock(true);
         }
-        if (Point.getInstance().getTotal() >= 3 && !(frame.getShellUnlock())) {
+        if (Point.getInstance().getTotal() >= 5 && !(frame.getShellUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "castle", 230, 480, frame.remote);
             frame.setShellUnlock(true);
         }

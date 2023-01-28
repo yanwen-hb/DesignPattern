@@ -21,6 +21,7 @@ public class IdleState implements State {
 
     public void clickStartButton() {
 
+        //display game state
         frame.getInstruction().setVisible(true);
         frame.getGameStateDisplay().setText("<html>Game Start!</html>");
         frame.getGameStateDisplay().setVisible(true);
@@ -54,6 +55,7 @@ public class IdleState implements State {
                         frame.getGameStateDisplay().setVisible(false);
                     }
                 }
+                //display lobster and crab 
                 for (var i = 0; i < 10; i++) {
                     JLabel crab = new Crab().GameProcess();
                     frame.getPanel().add(crab);
@@ -68,6 +70,8 @@ public class IdleState implements State {
                 frame.getPanel().repaint();
             }
         };
+        
+        //start timer
         Timer timer = new Timer(delay, taskPerformer);
         frame.setTimer(timer);
         timer.start();

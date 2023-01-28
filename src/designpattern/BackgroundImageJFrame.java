@@ -47,6 +47,7 @@ public class BackgroundImageJFrame extends JFrame {
     private static final String BACKGROUNDIMAGE_URL = "assets\\pantai.png";
 
     public BackgroundImageJFrame() {
+        //initialize states
         idleState = new IdleState(this);
         gameStartedState = new GameStartedState(this);
         gamePausedState = new GamePausedState(this);
@@ -58,11 +59,15 @@ public class BackgroundImageJFrame extends JFrame {
         setBackgroundSound(se);
         setSecondBackgroundSound(se2);
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // this is your screen size
-        ImageIcon image = new ImageIcon(BACKGROUNDIMAGE_URL); // imports the image
+        //declare screen size
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //import background image
+        ImageIcon image = new ImageIcon(BACKGROUNDIMAGE_URL); 
 
+        //declare panel 
         panel = new JPanel();
-        JLabel lbl = new JLabel(); // puts the image into a jlabel
+        //put background image to a jlabel
+        JLabel lbl = new JLabel(); 
         lbl.setIcon(image);
         lbl.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
         lbl.setName("background");
@@ -80,7 +85,7 @@ public class BackgroundImageJFrame extends JFrame {
         panel.add(point);
         point.setVisible(false);
 
-        // Creating start button
+        // create start button
         startButton = new JButton("Start");
         startButton.setBackground(new Color(0, 204, 204));
         startButton.setFont(new Font("ARIAL", Font.CENTER_BASELINE, 15));
@@ -89,7 +94,7 @@ public class BackgroundImageJFrame extends JFrame {
         startButton.setBounds(getSize().width - 130, 20, 100, 30);
         setStartButton(startButton);
 
-        //Creating pause button
+        //create pause button
         pauseButton = new JButton("Pause");
         pauseButton.setBackground(Color.red);
         pauseButton.setForeground(Color.white);
@@ -97,7 +102,7 @@ public class BackgroundImageJFrame extends JFrame {
         pauseButton.setFocusPainted(false);
         pauseButton.setBounds(getSize().width - 130, 20, 100, 30);
 
-        //Creating resume button
+        //create resume button
         resumeButton = new JButton("Resume");
         resumeButton.setBackground(Color.green);
         resumeButton.setBackground(new Color(0, 204, 0));
@@ -106,7 +111,7 @@ public class BackgroundImageJFrame extends JFrame {
         resumeButton.setFocusPainted(false);
         resumeButton.setBounds(getSize().width - 130, 20, 100, 30);
 
-        //Creating game instruction
+        //create game instruction
         instruction = new JLabel("<html>Game Instruction: <br>Click crab to add point! Dont click lobster!</html>");
         instruction.setForeground(Color.WHITE);
         instruction.setBounds(10, 20, 200, 50);
@@ -116,13 +121,11 @@ public class BackgroundImageJFrame extends JFrame {
         panel.setComponentZOrder(instruction, 0);
         instruction.setVisible(false);
 
-        //Creating game state display
+        //create game state display
         gameStateDisplay = new JLabel("<html>Game Start!</html>", SwingConstants.CENTER);
         gameStateDisplay.setForeground(Color.RED);
         // create a line border with the specified color and width
         Border border = BorderFactory.createLineBorder(Color.BLACK, 5);
-
-        // set the border of this component
         gameStateDisplay.setBorder(border);
         gameStateDisplay.setBounds((getSize().width - 300) / 2, (getSize().height - 200) / 2, 300, 50);
         gameStateDisplay.setFont(new Font("ARIAL", Font.CENTER_BASELINE, 36));
@@ -133,12 +136,12 @@ public class BackgroundImageJFrame extends JFrame {
         panel.setComponentZOrder(gameStateDisplay, 0);
         gameStateDisplay.setVisible(false);
 
-        //Creating static object buttons
+        //create static object buttons
         Remote remote = new Remote();
         setRemote(remote);
         buttons = createRemoteButton(this, remote, image); //image-> to determine the position of button
 
-        //Create object and add command 
+        //create object and add command 
         SimpleButtonFactory factory = new SimpleButtonFactory();
         setFactory(factory);
         ButtonStore buttonStore = new ButtonStore(factory);
@@ -150,24 +153,28 @@ public class BackgroundImageJFrame extends JFrame {
         sound_track = "assets\\sea.wav";
         setSoundTrack(sound_track);
 
+        //add action listener to pauseButton
         pauseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clickPauseButton();
             }
         });
 
+        //add action listener to startButton
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clickStartButton();
             }
         });
 
+        //add action listener to resumeButton
         resumeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 clickResumeButton();
             }
         });
 
+        //add all button into panel
         panel.add(startButton);
         panel.add(pauseButton);
         panel.add(resumeButton);
@@ -189,6 +196,7 @@ public class BackgroundImageJFrame extends JFrame {
         });
     }
 
+    //methods to delegate to the current state 
     public void clickStartButton() {
         state.clickStartButton();
     }
@@ -205,10 +213,12 @@ public class BackgroundImageJFrame extends JFrame {
         state.clickLobster();
     }
 
+    //allow object to transite the frame state to different state
     void setState(State state) {
         this.state = state;
     }
 
+    //set methods
     public void setPanel(JPanel panel) {
         this.panel = panel;
     }
@@ -269,6 +279,7 @@ public class BackgroundImageJFrame extends JFrame {
         this.se2 = se2;
     }
 
+    //get methods
     public State getGameStartedState() {
         return gameStartedState;
     }

@@ -25,11 +25,15 @@ public class GameStartedState implements State {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+        //change background music
         frame.getBackgroundSound().setFile("assets\\sea.wav");
         frame.getBackgroundSound().play();
+        //set current state to gamePausedState
         frame.setState(frame.getGamePausedState());
+        //display game pause message
         frame.getGameStateDisplay().setText("<html>Game Pause!</html>");
 
+        //display unlocked button according to point
         if (Point.getInstance().getTotal() >= 15 && !(frame.getSunUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "sun", 40, 70, frame.remote);
             frame.setSunUnlock(true);
@@ -49,12 +53,15 @@ public class GameStartedState implements State {
                 frame.getGameStateDisplay().setVisible(true);
             }
         }
+        //set pause button to invisible
         frame.getPauseButton().setVisible(false);
+        //set resume button to visible
         frame.getResumeButton().setVisible(true);
         JButton[] buttons = frame.getButtons();
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setVisible(true);
         }
+        //stop the timer
         frame.getTimer().stop();
         frame.getPanel().revalidate();
         frame.getPanel().repaint();
@@ -69,6 +76,7 @@ public class GameStartedState implements State {
 
     ;
     public void clickLobster() {
+        //set current state to idle state
         frame.setState(frame.getIdleState());
         try {
             frame.getSecondBackgroundSound().stop();
@@ -76,6 +84,7 @@ public class GameStartedState implements State {
             System.out.println(ex.getMessage());
         }
 
+        //display unlocked button according to point
         if (Point.getInstance().getTotal() >= 15 && !(frame.getSunUnlock())) {
             frame.buttonStore.displayButton(frame, frame.getButtons(), "sun", 40, 50, frame.remote);
             frame.setSunUnlock(true);
@@ -96,9 +105,13 @@ public class GameStartedState implements State {
                 frame.getInstruction().setVisible(false);
             }
         }
+        //set pause button to invisible
         frame.getPauseButton().setVisible(false);
+        //set resume button to invisible
         frame.getResumeButton().setVisible(false);
+        //set start button to visible
         frame.getStartButton().setVisible(true);
+        //stop timer
         frame.getTimer().stop();
         JButton[] buttons = frame.getButtons();
 

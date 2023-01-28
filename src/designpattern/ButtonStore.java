@@ -36,9 +36,11 @@ public class ButtonStore {
     }
 
     public void displayButton(BackgroundImageJFrame frame, JButton[] buttons, String name, int xAxis, int yAxis, Remote remote) {
+        //create static object
         StaticObject staticObject = null;
         staticObject = factory.createButton(frame, frame.getPanel(), remote, name, xAxis, yAxis);
-//        staticObject
+        
+        //insert static object into buttons
         AddStaticObjectCommand addStaticObject = null;
         RemoveStaticObjectCommand removeStateObject = null;
         addStaticObject= new AddStaticObjectCommand(staticObject);

@@ -17,7 +17,6 @@ import javax.swing.JPanel;
  * @author User
  */
 public class SimpleButtonFactory {
-//    Point pt = Point.getInstance(); 
     
     public StaticObject createButton(JFrame jFrame, JPanel panel, Remote remote, String name, int xAxis, int yAxis){
         StaticObject staticObject = null; 

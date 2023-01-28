@@ -16,7 +16,6 @@ public class Crab extends Game {
     @Override
     void point() {
         pt.total += 1;
-        //  pt.getTotal();
         frame.getPoint().setVisible(true); //display point 
         frame.getPoint().setText("Point: " + Point.getInstance().getTotal());
     }

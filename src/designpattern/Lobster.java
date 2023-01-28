@@ -17,7 +17,6 @@ public class Lobster extends Game {
 
     @Override
     void point() {
-        // pt.total -= 1;
         pt.getTotal();
     }
 

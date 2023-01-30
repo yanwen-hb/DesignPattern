@@ -368,20 +368,20 @@ public class BackgroundImageJFrame extends JFrame {
         return instruction;
     }
 
-    //command design pattern
+    //create button to add and remove static object
     public JButton[] createRemoteButton(JFrame f, Remote remote, ImageIcon image) {
-        JButton[] buttons = new JButton[12]; ////image.getIconWidth(), image.getIconHeight()
-        int xAxis = 20;//100;
-        int yAxis = image.getIconHeight() - 140;//350;
+        JButton[] buttons = new JButton[12];
+        int xAxis = 20;;
+        int yAxis = image.getIconHeight() - 140;
         for (int i = 0; i < 12; i++) {
             buttons[i] = new JButton("");
             buttons[i].setBackground(new Color(52, 73, 94));
             buttons[i].setForeground(Color.white);
             buttons[i].setFocusPainted(false);
             if (i % 2 == 1) {
-                buttons[i - 1].setBounds(xAxis, yAxis, 110, 30);
-                buttons[i].setBounds(xAxis, yAxis + 40, 110, 30);
-                xAxis += 120;
+                buttons[i - 1].setBounds(xAxis, yAxis, 140, 30);
+                buttons[i].setBounds(xAxis, yAxis + 40, 140, 30);
+                xAxis += 150;
             }
         }
         setButtons(buttons);

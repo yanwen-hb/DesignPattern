@@ -36,8 +36,8 @@ public class StaticObject{
     
     public void createObject(){
         ImageIcon image= new ImageIcon(imagePath);
-        ImageIcon image2=new ImageIcon(image.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT));
-        label.setIcon(image2);
+        ImageIcon image2=new ImageIcon(image.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)); //rescale the image
+        label.setIcon(image2); //use the rescaled image
         label.setVisible(false);
         label.setBounds(xAxis, yAxis, 80, 80);
         label.setName("staticObject");

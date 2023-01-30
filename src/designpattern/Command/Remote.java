@@ -10,7 +10,7 @@ package designpattern.Command;
  * @author ASUS
  */
 public class Remote {
-    Command[] onCommands;
+    Command[] onCommands; //declare command slots
     Command[] offCommands;
     
     public Remote(){
@@ -30,11 +30,11 @@ public class Remote {
         offCommands[slot]=offCommand;
     }
     
-    public void onButtonWasPushed(int slot){
+    public void onButtonWasPushed(int slot){  //call the execute method of Command object
         onCommands[slot].execute();
     }
     
-    public void offButtonWasPushed(int slot){
+    public void offButtonWasPushed(int slot){ //call the execute method of Command object
         offCommands[slot].execute();
     }
 }
